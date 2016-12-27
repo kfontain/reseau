@@ -1,5 +1,4 @@
-
-
+#!/usr/bin/python3
 
 symbols = [' ', 'O', 'X']
 EMPTY = 0
@@ -20,13 +19,13 @@ class grid:
         self.cells[cellNum] = player
 
     """ Display the state of the game
-        Example of output : 
+        Example of output :
         -------
         |O| |X|
         -------
         |X|O| |
         -------
-        | | |O| 
+        | | |O|
         -------
     """
     def display(self):
@@ -40,11 +39,11 @@ class grid:
     def winner(self, player):
         assert(player==J1 or player==J2)
         # horizontal line
-        for y in range(3): 
+        for y in range(3):
             if self.cells[y*3] == player and self.cells[y*3+1] == player and self.cells[y*3+2] == player:
                     return True
         # vertical line
-        for x in range(3): 
+        for x in range(3):
             if self.cells[x] == player and self.cells[3+x] == player and self.cells[6+x] == player:
                     return True
         #diagonals :
@@ -53,7 +52,7 @@ class grid:
         if self.cells[2] == player and self.cells[4] == player and self.cells[6] == player:
             return True
         return False
-    
+
     """ Return the state of the game: -1 if the game is not over, EMPTY if DRAW; J1 if player 1 wins and J2 if player 2 wins.
     """
     def gameOver(self):

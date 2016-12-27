@@ -1,22 +1,23 @@
 #!/usr/bin/python3
 
 from grid import *
-import  random
+from macro import *
+import random
 
 def main(listeJoueur):
     grids = [grid(), grid(), grid()]
     current_player = J1
-    quelle_case = bytes("Quelle case allez-vous jouer ?", 'utf-8')
+
     while grids[0].gameOver() == -1:
         if current_player == J1 :
             shot = -1
             while shot <0 or shot >=NB_CELLS:
-                listeJoueur[J1-1].send(quelle_case)
+                listeJoueur[J1-1].send(bytes(QUELLE_CASE))
                 shot = int(listeJoueur[J1-1].recv(100))
         if current_player == J2 :
             shot = -1
             while shot <0 or shot >=NB_CELLS:
-                listeJoueur[J2-1].send(quelle_case)
+                listeJoueur[J2-1].send(bytes(QUELLE_CASE))
                 shot = int(listeJoueur[J2-1].recv(100))
 
         if (grids[0].cells[shot] != EMPTY):
@@ -31,7 +32,7 @@ def main(listeJoueur):
             listeJoueur[J1-1].send()
 
         if current_player == J2:
-            listeJoueur[J2-1].send() //Grille en bytes.
+            listeJoueur[J2-1].send()
 
     print("game over")
     grids[0].display()
