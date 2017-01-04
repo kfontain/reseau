@@ -1,12 +1,21 @@
-BIENVENUE = 10
-START = 11
-QUELLE_CASE = 12
-PLAY = 1
+#!/usr/bin/python3
 
-#Il est trop compliqué de coder en dur les messages côté serveur. Il vaut mieux
-#n'envoyer qu'un seul type de variable et de traiter cas par cas.
-#Ici, des int (toujours sous forme de bytes).
-#Côté client, on a un cas pour chaque entier possible.
-#Par exemple si il reçoit l'entier 10 (BIENVENUE), il fera juste un print "Bienvenue".
-#Si il reçoit l'entier 1 (PLAY), alors il printera "Quelle case voulez-vous jouer"
-#et demandera à l'utilisateur de rentrer une case à jouer, puis enverra la valeur au serveur.
+import pickle
+
+WELCOME =   10
+START   =   11
+PLAY    =   12
+GRID    =   13
+WIN     =   14
+LOSE    =   15
+DRAW    =   16
+ERROR   =   17
+END     =   20
+
+MSG_WELCOME = pickle.dumps([WELCOME, None])
+MSG_START   = pickle.dumps([START, None])
+MSG_WIN     = pickle.dumps([WIN, None])
+MSG_LOSE    = pickle.dumps([LOSE, None])
+MSG_DRAW    = pickle.dumps([DRAW, None])
+MSG_ERROR   = pickle.dumps([ERROR, None])
+MSG_END     = pickle.dumps([END, None])

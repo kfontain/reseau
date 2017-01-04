@@ -12,12 +12,12 @@ def main(listeJoueur):
         if current_player == J1 :
             shot = -1
             while shot <0 or shot >=NB_CELLS:
-                listeJoueur[J1-1].send(bytes(QUELLE_CASE))
+                listeJoueur[J1-1].send(MSG_PLAY)
                 shot = int(listeJoueur[J1-1].recv(100))
         if current_player == J2 :
             shot = -1
             while shot <0 or shot >=NB_CELLS:
-                listeJoueur[J2-1].send(bytes(QUELLE_CASE))
+                listeJoueur[J2-1].send(MSG_PLAY)
                 shot = int(listeJoueur[J2-1].recv(100))
 
         if (grids[0].cells[shot] != EMPTY):

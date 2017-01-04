@@ -13,6 +13,10 @@ class grid:
         for i in range(NB_CELLS):
             self.cells.append(EMPTY)
 
+    def update(self, grid) :
+        for i in range(NB_CELLS):
+            self.cells[i] = grid.cells[i]
+
     def play(self, player, cellNum):
         assert(0<= cellNum and cellNum < NB_CELLS)
         assert(self.cells[cellNum] == EMPTY)
