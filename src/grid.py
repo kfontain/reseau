@@ -1,12 +1,12 @@
 #!/usr/bin/python3
 
-symbols = [' ', 'O', 'X']
-EMPTY = 0
-J1 = 1
-J2 = 2
+symbols = ['X', 'O', ' ']
+EMPTY = 2
+J1 = 0
+J2 = 1
 NB_CELLS=9
 
-class grid:
+class Grid:
     cells = []
     def __init__(self):
         self.cells = []
@@ -65,6 +65,6 @@ class grid:
         if self.winner(J2):
             return J2
         for i in range(NB_CELLS):
-            if(self.cells[i]== EMPTY):
+            if(self.cells[i] == EMPTY):
                 return -1
-        return 0
+        return 2

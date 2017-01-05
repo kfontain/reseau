@@ -8,8 +8,8 @@ import pickle
 import time
 
 from macro import *
-from test import main
 from grid import *
+from jeu import *
 
 listeSocket = []
 listeJoueur = []
@@ -22,6 +22,7 @@ serverSocket.listen(1)
 listeSocket.append(serverSocket)
 
 nb_joueur = 0
+game = Game()
 
 while(1):
     listeRead, _ , _ = select.select(listeSocket, [], [])
@@ -29,16 +30,14 @@ while(1):
         if (i == serverSocket):
             new_socket, adresse = serverSocket.accept()
             listeSocket.append(new_socket)
-            nb_joueur = nb_joueur + 1
             print("clients connectés : " + str(nb_joueur))
 
-        if (len(listeJoueur) < 2) :
+        if (nb_joueur < 2) :
             listeJoueur.append(new_socket)
+            nb_joueur = nb_joueur + 1
 
-        if (len(listeJoueur) > 2) :
-            listeSpec.append(new_socket)
-
-        if (len(listeJoueur) == 2) :
-            main(listeJoueur)
+        if (nb_joueur == 2) :
+            game.add_players(listeJoueur)
+            main(game)
             time.sleep(1)
-            serverSocket.close()
+            exit()
