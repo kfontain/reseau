@@ -23,9 +23,9 @@ def handle(tmp, server) :
         test.display()
         print("Quelle case voulez-vous jouer ?")
         print("Veuillez entrer un entier allant de 0 à 8")
-        shot = int(input())
+        shot = input()
         server.send(bytes(str(shot).encode('utf')))
-        print("Vous avez joué la case " + str(shot))
+        print("Vous avez joué la case " + shot)
 
     if (code == ERROR) :
         print("Cette case a déjà été jouée, elle a été révélée.")
@@ -44,7 +44,7 @@ def handle(tmp, server) :
         print("Egalité.")
 
     if (code == END) :
-        print("Parti terminée.")
+        print("Parti terminée. Le serveur va fermer.")
 
 host = "localhost"
 port = int(sys.argv[1])

@@ -5,6 +5,7 @@ import select
 import threading
 import sys
 import pickle
+import time
 
 from macro import *
 from test import main
@@ -39,3 +40,5 @@ while(1):
 
         if (len(listeJoueur) == 2) :
             main(listeJoueur)
+            time.sleep(1)
+            serverSocket.close()

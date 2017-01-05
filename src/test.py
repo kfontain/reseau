@@ -38,10 +38,6 @@ def main(listeJoueur):
 
     winner = grids[0].gameOver()
 
-    for j in listeJoueur :
-        tosend = pickle.dumps([GRID, grids[0]])
-        j.send(tosend)
-
     if (winner == J1) :
         listeJoueur[J1-1].send(MSG_WIN)
         listeJoueur[J2-1].send(MSG_LOSE)
@@ -53,3 +49,10 @@ def main(listeJoueur):
     if (winner == EMPTY) :
         listeJoueur[J1-1].send(MSG_DRAW)
         listeJoueur[J2-1].send(MSG_DRAW)
+
+    for j in listeJoueur :
+        tosend = pickle.dumps([GRID, grids[0]])
+        j.send(tosend)
+
+    for j in listeJoueur :
+        j.send(MSG_END)
