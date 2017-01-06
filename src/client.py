@@ -10,8 +10,9 @@ import select
 import pickle
 
 def handle(msg, server) :
-
-    code = msg[0]
+    #Cette fonction prend en premier paramètre le tableau envoyé depuis le serveur.
+    #Le deuxième paramètre est le serveur en question.
+    code = msg[0] #Première case des données reçues détermine le comportement.
 
     if (code == WELCOME) :
         print("Bienvenue sur le jeu du morpion aveugle.")
@@ -25,12 +26,12 @@ def handle(msg, server) :
         print("Deja une partie en cours, vous serez spectateur de la prochaine partie.")
 
     if (code == PLAY) :
-        test = msg[1]
+        test = msg[1] #Affiche la grille reçue.
         test.display()
         print("Quelle case voulez-vous jouer ?")
         print("Veuillez entrer un entier allant de 0 à 8")
         shot = input()
-        server.send(bytes(str(shot).encode('utf')))
+        server.send(bytes(str(shot).encode('utf'))) #Envoie le coup joué sous forme d'octets.
         print("Vous avez joué la case " + shot)
         return
 
@@ -42,7 +43,7 @@ def handle(msg, server) :
         print("Tapez 1 pour rejouer, 0 sinon.")
         shot = input()
         tmp = int(shot)
-        server.send(bytes(str(shot).encode('utf')))
+        server.send(bytes(str(shot).encode('utf'))) #Même fonctionnement que dans le cas PLAY.
         if (tmp == 1) :
             print("Une nouvelle partie commencera si votre adversaire veut aussi rejouer.")
             return
@@ -56,8 +57,8 @@ def handle(msg, server) :
         return
 
     if (code == GRID) :
-        test = msg[1]
-        test.display()
+        tmp = msg[1]
+        tmp.display()
         return
 
     if (code == WIN) :
@@ -76,11 +77,11 @@ def handle(msg, server) :
         print("Parti terminée, merci d'avoir jouer.")
         exit()
 
-if (len(sys.argv) == 1) :
-    solo()
+if (len(sys.argv) == 1) : #Sans argument = partie en solo
+    solo() #fonction solo du fichier main.py
     exit()
 
-host = "localhost"
+host = "localhost" #Peut ne pas marcher, à remplacer par "::1" (avec les quotes) dans ce cas.
 port = int(sys.argv[1])
 
 s = socket.socket(socket.AF_INET6, socket.SOCK_STREAM, 0, None)

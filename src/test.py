@@ -41,7 +41,7 @@ while(1):
             nb_joueur = nb_joueur + 1
             listeJoueur.append(new_socket)
 
-        if (nb_user > 2) :
+        if (nb_user > 2) : #Spectateur, cette boucle s'execute plusieurs fois.
             listeSpec.append(new_socket)
             for i in listeSpec :
                 tosend = pickle.dumps([GRID, game.grids[2]])

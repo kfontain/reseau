@@ -15,7 +15,6 @@ port = 8888
 
 listeSocket = []
 listeJoueur = []
-listeSpec   = []
 
 serverSocket = socket.socket(socket.AF_INET6, socket.SOCK_STREAM, 0, None)
 serverSocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -40,6 +39,6 @@ while(1):
 
         if (nb_joueur == 2) :
             game.add_players(listeJoueur)
-            main(game)
+            main(game) #fonction main jeu.py
             time.sleep(1)
             exit()

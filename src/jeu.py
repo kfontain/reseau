@@ -12,7 +12,7 @@ class Game:
         self.players = [None, None]
         self.spectators = []
 
-    def reset(self) :
+    def reset(self) : #Remet les grilles à zéro
         self.grids = [Grid(), Grid(), Grid()]
 
     def add_players(self, listeJoueur) :
@@ -28,14 +28,14 @@ class Game:
 def main(game):
 
     game.reset()
-    turn = random.randint(J1,J2)
+    turn = random.randint(J1,J2) #détermine le joueur commençant la partie.
 
-    for j in game.players :
+    for j in game.players : #message bienvenue
         j.send(MSG_START)
 
     while game.grids[2].gameOver() == -1 :
 
-        if turn == J1 :
+        if turn == J1 : #Tour joueur 1
             shot = -1
             game.players[J2].send(MSG_WAIT)
             while shot <0 or shot >=NB_CELLS:
@@ -43,7 +43,7 @@ def main(game):
                 game.players[turn].send(tosend)
                 shot = int(game.players[turn].recv(1024))
 
-        if turn == J2 :
+        if turn == J2 : #tour joueur 2
             shot = -1
             game.players[J1].send(MSG_WAIT)
             while shot <0 or shot >=NB_CELLS:
@@ -80,12 +80,13 @@ def main(game):
 
     answer = 0
 
-    for j in game.players :
+    for j in game.players : #fonction rejouer ?
         j.send(MSG_REPLAY)
         shot = int(j.recv(1024))
         answer = answer + shot
         if (answer == 2) :
             main(game)
 
-    for j in game.players :
+    for j in game.players : #fin de la partie
         j.send(MSG_END)
+        time.sleep(1)
