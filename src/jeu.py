@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 import time
+import random
 
 from grid import *
 from macro import *
@@ -11,18 +12,23 @@ class Game:
         self.players = [None, None]
         self.spectators = []
 
+    def reset(self) :
+        self.grids = [Grid(), Grid(), Grid()]
+
     def add_players(self, listeJoueur) :
         self.players[J1] = listeJoueur[J1]
         self.players[J2] = listeJoueur[J2]
 
     def add_spectators(self, listeSpec) :
-        for i in range(len(listeSpec) - 1) :
+        tmp = len(listeSpec)
+        for i in range(tmp) :
             self.spectators[i] = listeSpec[i]
 
 
 def main(game):
 
-    turn = J1
+    game.reset()
+    turn = random.randint(J1,J2)
 
     for j in game.players :
         j.send(MSG_START)
@@ -31,6 +37,7 @@ def main(game):
 
         if turn == J1 :
             shot = -1
+            game.players[J2].send(MSG_WAIT)
             while shot <0 or shot >=NB_CELLS:
                 tosend = pickle.dumps([PLAY, game.grids[turn]])
                 game.players[turn].send(tosend)
@@ -38,6 +45,7 @@ def main(game):
 
         if turn == J2 :
             shot = -1
+            game.players[J1].send(MSG_WAIT)
             while shot <0 or shot >=NB_CELLS:
                 tosend = pickle.dumps([PLAY, game.grids[turn]])
                 game.players[turn].send(tosend)
@@ -70,6 +78,14 @@ def main(game):
         tosend = pickle.dumps([GRID, game.grids[2]])
         j.send(tosend)
 
+    answer = 0
+
+    for j in game.players :
+        j.send(MSG_REPLAY)
+        shot = int(j.recv(1024))
+        answer = answer + shot
+        if (answer == 2) :
+            main(game)
+
     for j in game.players :
         j.send(MSG_END)
-        time.sleep(1)

@@ -21,6 +21,9 @@ def handle(msg, server) :
         print("La partie va commencer.")
         return
 
+    if (code == SPEC) :
+        print("Deja une partie en cours, vous serez spectateur de la prochaine partie.")
+
     if (code == PLAY) :
         test = msg[1]
         test.display()
@@ -30,6 +33,23 @@ def handle(msg, server) :
         server.send(bytes(str(shot).encode('utf')))
         print("Vous avez joué la case " + shot)
         return
+
+    if (code == WAIT) :
+        print("C'est au tour de votre adversaire...")
+
+    if (code == REPLAY) :
+        print("Souhaitez-vous rejouer une partie ?")
+        print("Tapez 1 pour rejouer, 0 sinon.")
+        shot = input()
+        tmp = int(shot)
+        server.send(bytes(str(shot).encode('utf')))
+        if (tmp == 1) :
+            print("Une nouvelle partie commencera si votre adversaire veut aussi rejouer.")
+            return
+        else :
+            print("Merci d'avoir joué.")
+            exit()
+
 
     if (code == ERROR) :
         print("Cette case a déjà été jouée, elle a été révélée.")
@@ -53,7 +73,7 @@ def handle(msg, server) :
         return
 
     if (code == END) :
-        print("Parti terminée. Le serveur va fermer.")
+        print("Parti terminée, merci d'avoir jouer.")
         exit()
 
 if (len(sys.argv) == 1) :
