@@ -51,9 +51,16 @@
 \maketitle
 
 %-------------------------------------------------------------------------------
+% Outline
+%-------------------------------------------------------------------------------
+
+\tableofcontents
+
+%-------------------------------------------------------------------------------
 % Présentation du projet - Introduction
 %-------------------------------------------------------------------------------
 
+\newpage
 \section{Présentation du projet}
 
 Ce travail a été réalisé dans un cadre universitaire par des étudiants en
@@ -148,7 +155,7 @@ mieux coller avec notre code.
 
 \newpage
 
-\section{Difficultés rencontrées à l'implémentation}
+\section{Difficultés rencontrées}
 
 Au début, nous pensions tout faire faire par le serveur. Héberger la partie,
 gérer les coups, modifier les grilles. Le serveur ferait alors le rendu des
@@ -196,30 +203,97 @@ ou des octets en tableaux.
 % Extensions
 %-------------------------------------------------------------------------------
 
+\newpage
+
 \section{Extensions}
 
 \subsection*{Partie seul}
 
-Si vous lancez le fichier client.py sans paramètre vous pourrez jouer seul
+Si on lance le fichier client.py sans paramètre nous pouvons jouer seul
 contre une IA jouant des coups aléatoires.
+Il s'agit juste d'un appel à la fonction permettant de jouer seul qui
+est fournie. Elle se trouve dans le fichier \textit{main.py}.
+
+\subsection*{Initiative aléatoire}
+
+Le joueur ayant la main est déterminée de façon aléatoire par le serveur.
+Le joueur 1 a autant de chance de commencer que le joueur 2.
+Nous avons utilisé la fonction random.randomint(a, b). Cette fonction renvoie
+un entier généré aléatoirement, compris entre a et b.
+Cette fonction est appelée à la ligne 31 du fichier \textit{jeu.py}.
+
+\subsection*{Fonction rejouer}
+
+Lorsqu'une partie prend fin (victoire/défaite ou égalité), il est demandé aux
+clients si ils désirent ou non rejouer une partie.
+Si les deux joueurs répondent affirmativement, une nouvelle partie se lance.
+Sinon, le serveur se ferme et les clients s'arrêtent.
 
 \subsection*{Mode spéctateur}
 
-c'est trop dur :(
+Si un troisième client se connecte au port du serveur, il devient automatiquement
+spectateur. Il reçoit alors la grille complète du jeu à chaque fois qu'un coup
+est joué.
+Cette extensions nous a posé beaucoup de problème et n'est pas entièrement
+fonctionnelle. Les détails sont dans la section suivante.
+Une ébauche du mode spectateur est visible en lançant
+le fichier \textit{test.py} et en connectant 3 clients. Les deux premiers
+seront joueurs et le troisième sera spectateur.
+
+ \begin{verbatim}
+ python3 test.py
+ python3 client.py 8888 (3 fois)
+ \end{verbatim}
+
 
 %-------------------------------------------------------------------------------
 % Difficultées rencontrées Extensions
 %-------------------------------------------------------------------------------
 
 \newpage
+
 \section{Difficultées rencontrées aux extensions}
+
+\subsection*{Mode spéctateur}
+
+Nous avons tenté d'implémenter cette fonctionnalité à plusieurs reprises.
+Dans notre seconde version (seconde version mentionnée dans
+la section \textbf{difficultés rencontrées}), l'envoie de grille était
+peu fiable et ajouter un spectateur qui devait recevoir une grille
+ne faisait qu'agraver la situation.
+La tentative d'implémentation de spectateurs nous a montré les limites de notre
+seconde version. Ce qui nous a poussé à changer la structure de notre code.
+
+\par
+
+Dans notre version finale, nous avons amélioré la stabilité ainsi que la
+fiabilité de l'échange de grille. Nous avons réussi à otbenir un mode
+spéctateur qui marche à peu près comme souhaité, excepté le fait qu'il affiche bien
+plus de grilles que prévu.
+
+\subsection*{Gestion des déconnexions (envisagée)}
+
+Nous pensions implémenter une fonctionnalité permettant de gérer la déconnexion
+de l'un ou des deux joueurs. Une solution envisagée était de vérifier la taille
+des données envoyées par le client lorsque celui-ci était demandé de jouer une
+des cases de la grille. Si les données reçues étaient vides, cela signifierait
+que le client a rencontré un problème. Dans ce cas-là, nous aurions pu fermer
+le serveur et mettre fin à l'autre client encore connecté.
 
 %-------------------------------------------------------------------------------
 % Conclusion
 %-------------------------------------------------------------------------------
 
-\newpage
-
 \section{Conclusion}
-
+Le projet s'est révélé être plus compliqué que ce que nous pensions.
+L'échange de données entre les clients et le serveur n'est pas une chose
+facile à gérer. Le comportement de la boucle infinie du serveur n'a pas été
+entièrement compris, ce qui nous a posé problème à plusieurs reprises.
+Nous avons pu approfondir nos connaissances en langage Python au travers
+de ce projet. \\
+Cependant, nous pensons que la fin de ce semestre était relativement mal organisée.
+En effet, le semestre était nettement plus chargé à la fin qu'au début.
+Avec plusieurs projets en parrallèle ainsi que les examens en même temps,
+s'organiser n'était pas chose simple et nous aurions aimer avoir un peu plus de
+temps.
 \end{document}
