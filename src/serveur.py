@@ -11,13 +11,15 @@ from macro import *
 from grid import *
 from jeu import *
 
+port = 8888
+
 listeSocket = []
 listeJoueur = []
 listeSpec   = []
 
 serverSocket = socket.socket(socket.AF_INET6, socket.SOCK_STREAM, 0, None)
 serverSocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-serverSocket.bind(('', 8888))
+serverSocket.bind(('', port))
 serverSocket.listen(1)
 listeSocket.append(serverSocket)
 
@@ -30,7 +32,7 @@ while(1):
         if (i == serverSocket):
             new_socket, adresse = serverSocket.accept()
             listeSocket.append(new_socket)
-            print("clients connectés : " + str(nb_joueur))
+            new_socket.send(MSG_WELCOME)
 
         if (nb_joueur < 2) :
             listeJoueur.append(new_socket)
