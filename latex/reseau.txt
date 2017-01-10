@@ -1,0 +1,20 @@
+SLIDE 2 : SOMMAIRE
+
+Ordre chornologique, montre notre cheminement.
+Version zéro : tout faire faire par le serveur -> non compatible avec le sujet. abandon direct.
+Première version : basée sur un échange d'entier entre le serveur et le client.
+Deuxième version : version actuelle, échange de tableaux
+Extensions : Les extensions qu'on a pu ajouté et le mode spectateur qui n'est pas totalement fonctionnel.
+
+*****
+
+SLIDE 3 : VERSION 1
+
+Grille complète = grille non aveugle, côté serveur.
+Grille individuelle = grille aveugle, côté client. Chacun a la sienne.
+Echanges d'entier castés en octets. Montrer sur l'image.
+Sur l'image, le code est valable pour les deux, client ou serveur.
+
+Pour les coups joués, le client envoie le numéro de la case qu'il veut jouer
+et le serveur renvoie une réponse, si oui ou non c'est possible.
+Le client remplie ainsi sa propre grille et l'affiche.
